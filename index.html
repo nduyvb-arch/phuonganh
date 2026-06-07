@@ -646,6 +646,33 @@
     }
     .add-photo-btn:hover { background: rgba(255,255,255,0.7); }
     .hidden-file-input { display: none; }
+    /* ===== REPORT DOWNLOAD AREA ===== */
+    .report-area {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      padding: 0.6rem 1.6rem 0.8rem;
+      border-top: 1px dashed rgba(200,180,220,0.3);
+    }
+    .report-btn {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+      border: 1.5px solid var(--week-accent, var(--pink-dark));
+      border-radius: 50px;
+      padding: 0.38rem 1rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--week-accent, var(--pink-dark));
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(120,90,140,0.10);
+    }
+    .report-btn:hover {
+      background: var(--week-accent, var(--pink-dark));
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(120,90,140,0.22);
+    }
+    .report-btn .rb-icon { font-size: 1rem; }
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .about-grid { grid-template-columns: 1fr; }
@@ -910,6 +937,7 @@ const WEEKS = [
       "bài 1/z7908535225710_34c612dfc4ecc095e052e65243a9234f.jpg",
       "bài 1/z7908535276982_dc9290b5ba4aad3ff88da2134c035a97.jpg",
     ],
+    reports: [],
     bg1: "#fcd5b5", bg2: "#f9c6d0", accent: "#e07060",
     emoji: "🗂️",
   },
@@ -924,7 +952,10 @@ const WEEKS = [
       "Đánh giá độ tin cậy của thông tin",
       "Chụp ảnh màn hình kết quả tìm kiếm",
     ],
-    images: [], // Chỉ có file docx
+    images: [],
+    reports: [
+      { label: "📄 Báo cáo Tuần 2", file: "bài 2/Báo cáo.docx" },
+    ],
     bg1: "#d9c9f0", bg2: "#b8d8f0", accent: "#7a5cc0",
     emoji: "🔍",
   },
@@ -942,6 +973,9 @@ const WEEKS = [
     images: [
       "bài 3/Screenshot 2026-04-05 202057.png",
       "bài 3/Screenshot 2026-04-05 203452.png",
+    ],
+    reports: [
+      { label: "📄 Bài tập thực hành", file: "bài 3/tmpowor8i_bai-tap-thuc-hanh.docx" },
     ],
     bg1: "#b8e8d4", bg2: "#d9c9f0", accent: "#3a8e6a",
     emoji: "✍️",
@@ -962,6 +996,9 @@ const WEEKS = [
       "bài 4/z7742571340302_8519c3ed82d7374710d74704712ae2a1.jpg",
       "bài 4/z7742601038934_7c400a728d6812caf4e7f14e66c8ad90.jpg",
     ],
+    reports: [
+      { label: "📄 Báo cáo cá nhân", file: "bài 4/BÁO CÁO CÁ NHÂN.docx" },
+    ],
     bg1: "#fcd5b5", bg2: "#b8e8d4", accent: "#e07030",
     emoji: "🤝",
   },
@@ -981,6 +1018,10 @@ const WEEKS = [
       "bài 5/Screenshot 2026-05-06 201503.png",
       "bài 5/Screenshot 2026-05-06 202227.png",
     ],
+    reports: [
+      { label: "📄 Báo cáo Tuần 5", file: "bài 5/BÁO CÁO1.docx" },
+      { label: "📑 Thuyết trình PDF", file: "bài 5/Công nghệ AI trong Thời đại Hiện đại.pdf" },
+    ],
     bg1: "#b8d8f0", bg2: "#fcd5b5", accent: "#2a6aaa",
     emoji: "🎨",
   },
@@ -995,7 +1036,10 @@ const WEEKS = [
       "Liên hệ với chính sách AI thực tế",
       "Đề xuất giải pháp sử dụng AI có trách nhiệm",
     ],
-    images: [], // Chỉ có file docx
+    images: [],
+    reports: [
+      { label: "📄 Báo cáo Tuần 6", file: "bài 6/BÁO CÁO...docx" },
+    ],
     bg1: "#f9c6d0", bg2: "#b8d8f0", accent: "#9040a0",
     emoji: "⚖️",
   },
@@ -1048,6 +1092,10 @@ function renderWeeks() {
         </ul>
       </div>
       ${stripHTML}
+      ${week.reports && week.reports.length > 0 ? `
+      <div class="report-area">
+        ${week.reports.map(r => `<a class="report-btn" href="${encodeURIComponentPath(r.file)}" download title="Tải xuống ${r.label}"><span class="rb-icon">⬇️</span>${r.label}</a>`).join('')}
+      </div>` : ''}
       <button class="add-photo-btn" onclick="triggerUpload(${week.id})">
         📷 Thêm ảnh
       </button>
