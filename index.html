@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio – Đồng Ngọc Phương Anh | Ứng dụng CNTT</title>
+  <meta name="description" content="Portfolio học tập 6 tuần của Đồng Ngọc Phương Anh – ghi lại hành trình học Ứng dụng Công nghệ Thông tin tại ĐHQGHN." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --pink:       #f9c6d0;
+      --pink-dark:  #e8a4b4;
+      --peach:      #fcd5b5;
+      --peach-dark: #f0b88a;
+      --lavender:   #d9c9f0;
+      --lavender-dark:#b9a5dc;
+      --mint:       #b8e8d4;
+      --mint-dark:  #8ecfb8;
+      --sky:        #b8d8f0;
+      --sky-dark:   #8abfe0;
+      --cream:      #fdf6ee;
+      --white:      #ffffff;
+      --text:       #4a3f5c;
+      --text-light: #7a6e8a;
+      --text-muted: #a89db8;
+      --shadow-sm:  0 2px 12px rgba(120,90,140,0.10);
+      --shadow-md:  0 6px 28px rgba(120,90,140,0.16);
+      --shadow-lg:  0 12px 48px rgba(120,90,140,0.22);
+      --radius:     20px;
+      --radius-sm:  12px;
+      --transition: 0.35s cubic-bezier(.4,0,.2,1);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    /* ===== DECORATIVE BLOBS ===== */
+    .blob-bg {
+      position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+    }
+    .blob-bg span {
+      position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35;
+    }
+    .blob-bg .b1 { width:550px; height:550px; background:var(--pink);    top:-120px; left:-120px; animation: blobMove 12s ease-in-out infinite alternate; }
+    .blob-bg .b2 { width:420px; height:420px; background:var(--lavender); top:30%; right:-80px; animation: blobMove 15s ease-in-out infinite alternate-reverse; }
+    .blob-bg .b3 { width:380px; height:380px; background:var(--mint);    bottom:-60px; left:30%; animation: blobMove 10s ease-in-out infinite alternate; }
+    .blob-bg .b4 { width:300px; height:300px; background:var(--peach);   bottom:20%; right:15%;  animation: blobMove 13s ease-in-out infinite alternate-reverse; }
+    @keyframes blobMove {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(30px,20px) scale(1.08); }
+    }
+    /* ===== FLOATING PETALS ===== */
+    .petals { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+    .petal {
+      position: absolute;
+      width: 10px; height: 14px;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      opacity: 0;
+      animation: petalFall linear infinite;
+    }
+    @keyframes petalFall {
+      0%   { opacity:0; transform: translateY(-20px) rotate(0deg); }
+      10%  { opacity:0.7; }
+      90%  { opacity:0.5; }
+      100% { opacity:0; transform: translateY(110vh) rotate(360deg) translateX(60px); }
+    }
+    /* ===== NAVIGATION ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(253,246,238,0.85);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(249,198,208,0.35);
+      padding: 0 2rem;
+      height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--pink-dark);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--lavender-dark); font-style: italic; }
+    .nav-links { display: flex; gap: 0.4rem; align-items: center; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 0.45rem 1rem;
+      border-radius: 50px;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      background: var(--pink);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+    .nav-links a.active { background: var(--pink); color: var(--text); }
+    /* ===== HERO ===== */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--pink);
+      border-radius: 50px;
+      padding: 0.4rem 1.2rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--pink-dark);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.8rem;
+      animation: fadeInDown 0.8s ease;
+    }
+    .hero-badge::before { content: '🌸'; font-size: 1rem; }
+    .hero-avatar {
+      width: 130px; height: 130px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink), var(--lavender), var(--mint));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+      margin: 0 auto 1.8rem;
+      box-shadow: 0 0 0 8px rgba(249,198,208,0.3), 0 0 0 16px rgba(249,198,208,0.12);
+      animation: fadeInDown 0.9s ease 0.1s both, avatarPulse 3s ease-in-out 1.5s infinite;
+      position: relative;
+    }
+    @keyframes avatarPulse {
+      0%, 100% { box-shadow: 0 0 0 8px rgba(249,198,208,0.3), 0 0 0 16px rgba(249,198,208,0.12); }
+      50%       { box-shadow: 0 0 0 12px rgba(249,198,208,0.4), 0 0 0 24px rgba(249,198,208,0.08); }
+    }
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--pink-dark), var(--lavender-dark), #9b7fd4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+      animation: fadeInUp 0.9s ease 0.2s both;
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--text-light);
+      font-weight: 400;
+      margin-bottom: 0.8rem;
+      animation: fadeInUp 0.9s ease 0.3s both;
+    }
+    .hero-school {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 2.4rem;
+      animation: fadeInUp 0.9s ease 0.4s both;
+    }
+    .hero-school strong { color: var(--lavender-dark); font-weight: 600; }
+    .hero-tags {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+      animation: fadeInUp 0.9s ease 0.5s both;
+    }
+    .hero-tag {
+      padding: 0.4rem 1.1rem;
+      border-radius: 50px;
+      font-size: 0.83rem;
+      font-weight: 500;
+      border: 1.5px solid;
+      transition: var(--transition);
+      cursor: default;
+    }
+    .hero-tag:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+    .hero-tag.pink    { background: var(--pink);     border-color: var(--pink-dark);     color: #8b4c65; }
+    .hero-tag.lavender{ background: var(--lavender); border-color: var(--lavender-dark); color: #6b4a9a; }
+    .hero-tag.mint    { background: var(--mint);     border-color: var(--mint-dark);     color: #2d7a60; }
+    .hero-tag.peach   { background: var(--peach);    border-color: var(--peach-dark);    color: #8b5c2a; }
+    .hero-tag.sky     { background: var(--sky);      border-color: var(--sky-dark);      color: #2a5c8b; }
+    .scroll-hint {
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      animation: fadeInUp 1s ease 0.8s both;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    .scroll-hint .arrow {
+      width: 28px; height: 28px;
+      border: 2px solid var(--pink-dark);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      animation: bounce 2s ease-in-out infinite;
+      color: var(--pink-dark);
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(6px); }
+    }
+    /* ===== SECTIONS ===== */
+    section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pink-dark);
+      margin-bottom: 0.7rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      color: var(--text);
+      line-height: 1.25;
+    }
+    .section-title em { color: var(--lavender-dark); font-style: italic; }
+    .section-desc {
+      margin-top: 0.8rem;
+      color: var(--text-light);
+      font-size: 0.97rem;
+      max-width: 580px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+    /* ===== ABOUT ===== */
+    #about {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    .about-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(249,198,208,0.3);
+      transition: var(--transition);
+    }
+    .about-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .about-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .about-card p, .about-card li {
+      color: var(--text-light);
+      font-size: 0.93rem;
+      line-height: 1.75;
+    }
+    .about-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .about-card li::before { content: '✦ '; color: var(--pink-dark); font-size: 0.75rem; }
+    .rubric-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      grid-column: 1 / -1;
+    }
+    .rubric-table th {
+      background: linear-gradient(135deg, var(--pink), var(--lavender));
+      color: var(--text);
+      padding: 0.8rem 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    .rubric-table th:first-child { border-radius: 12px 0 0 0; }
+    .rubric-table th:last-child  { border-radius: 0 12px 0 0; }
+    .rubric-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(249,198,208,0.25);
+      color: var(--text-light);
+      vertical-align: top;
+    }
+    .rubric-table tr:nth-child(even) td { background: rgba(249,198,208,0.07); }
+    .rubric-table tr:last-child td:first-child { border-radius: 0 0 0 12px; }
+    .rubric-table tr:last-child td:last-child  { border-radius: 0 0 12px 0; }
+    .score-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 50px;
+      background: var(--lavender);
+      color: #6b4a9a;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    /* ===== WEEK CARDS ===== */
+    #weeks { padding-top: 5rem; padding-bottom: 5rem; }
+    .weeks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    .week-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      border: 1px solid rgba(249,198,208,0.25);
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+    }
+    .week-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+    .week-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      border: 2px solid transparent;
+      transition: var(--transition);
+      pointer-events: none;
+    }
+    .week-card:hover::after { border-color: var(--week-accent, var(--pink)); }
+    .week-header {
+      padding: 1.5rem 1.6rem 1.2rem;
+      background: linear-gradient(135deg, var(--week-bg1, var(--pink)), var(--week-bg2, var(--lavender)));
+      display: flex; align-items: center; gap: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .week-header::before {
+      content: '';
+      position: absolute;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      top: -60px; right: -40px;
+    }
+    .week-number-badge {
+      background: rgba(255,255,255,0.85);
+      border-radius: 14px;
+      width: 54px; height: 54px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .week-number-badge .wn-label { font-size: 0.6rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .week-number-badge .wn-num   { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--text); line-height: 1; }
+    .week-header-text { flex: 1; min-width: 0; }
+    .week-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+      line-height: 1.3;
+    }
+    .week-subtitle { font-size: 0.8rem; color: var(--text-light); }
+    .week-body { padding: 1.4rem 1.6rem 0; }
+    .week-desc {
+      font-size: 0.88rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .week-tasks {
+      list-style: none;
+      margin-bottom: 1rem;
+    }
+    .week-tasks li {
+      font-size: 0.83rem;
+      color: var(--text-light);
+      padding: 0.3rem 0;
+      display: flex; align-items: flex-start; gap: 0.5rem;
+      border-bottom: 1px dashed rgba(200,180,220,0.25);
+    }
+    .week-tasks li:last-child { border-bottom: none; }
+    .week-tasks li .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--week-accent, var(--pink-dark));
+      margin-top: 5px; flex-shrink: 0;
+    }
+    /* Gallery preview strip */
+    .gallery-strip {
+      display: flex; gap: 6px;
+      overflow-x: auto;
+      padding: 1rem 1.6rem;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--pink) transparent;
+    }
+    .gallery-strip::-webkit-scrollbar { height: 4px; }
+    .gallery-strip::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 2px; }
+    .gallery-strip img {
+      width: 90px; height: 70px;
+      object-fit: cover;
+      border-radius: 10px;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
+    .gallery-strip img:hover { border-color: var(--week-accent, var(--pink-dark)); transform: scale(1.05); }
+    .no-images {
+      padding: 1rem 1.6rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    .week-footer {
+      padding: 1rem 1.6rem 1.4rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .image-count {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex; align-items: center; gap: 0.3rem;
+    }
+    .view-btn {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--week-accent, var(--pink-dark));
+      background: none;
+      border: 1.5px solid var(--week-accent, var(--pink-dark));
+      border-radius: 50px;
+      padding: 0.35rem 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+    .view-btn:hover {
+      background: var(--week-accent, var(--pink-dark));
+      color: white;
+    }
+    /* ===== LIGHTBOX ===== */
+    #lightbox {
+      display: none;
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(40,30,60,0.92);
+      backdrop-filter: blur(10px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    #lightbox.open { display: flex; }
+    .lightbox-close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      width: 44px; height: 44px;
+      cursor: pointer;
+      color: white;
+      font-size: 1.3rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: var(--transition);
+    }
+    .lightbox-close:hover { background: var(--pink-dark); }
+    .lightbox-week-title {
+      position: absolute; top: 1.5rem; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.8);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+    .lightbox-main {
+      display: flex; align-items: center; gap: 1.5rem;
+      max-width: 960px; width: 100%;
+    }
+    .lb-arrow {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      width: 48px; height: 48px;
+      cursor: pointer;
+      color: white;
+      font-size: 1.4rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+    .lb-arrow:hover { background: var(--pink-dark); }
+    #lightbox-img {
+      max-width: 100%;
+      max-height: 72vh;
+      object-fit: contain;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      flex: 1;
+      animation: fadeInScale 0.25s ease;
+    }
+    @keyframes fadeInScale {
+      from { opacity:0; transform: scale(0.94); }
+      to   { opacity:1; transform: scale(1); }
+    }
+    .lightbox-thumbnails {
+      display: flex; gap: 8px;
+      margin-top: 1.2rem;
+      overflow-x: auto;
+      max-width: 100%;
+      padding-bottom: 4px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.3) transparent;
+    }
+    .lightbox-thumbnails img {
+      width: 64px; height: 50px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      opacity: 0.55;
+      border: 2px solid transparent;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    .lightbox-thumbnails img.active {
+      opacity: 1;
+      border-color: var(--pink);
+    }
+    .lightbox-thumbnails img:hover { opacity: 0.85; }
+    #lightbox-counter {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.82rem;
+      margin-top: 0.7rem;
+    }
+    /* ===== SUMMARY ===== */
+    #summary { padding-top: 5rem; padding-bottom: 5rem; }
+    .summary-content {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(249,198,208,0.3);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .summary-item h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .summary-item p, .summary-item li {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      line-height: 1.75;
+    }
+    .summary-item ul { list-style: none; }
+    .summary-item li { padding: 0.3rem 0; }
+    .summary-item li::before { content: '🌸 '; }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+      grid-column: 1 / -1;
+    }
+    .skill-pill {
+      background: linear-gradient(135deg, var(--pink), var(--lavender));
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+      display: flex; align-items: center; gap: 0.6rem;
+      transition: var(--transition);
+    }
+    .skill-pill:hover { transform: translateX(4px); box-shadow: var(--shadow-sm); }
+    .skill-pill span.icon { font-size: 1.1rem; }
+    /* ===== FOOTER ===== */
+    footer {
+      background: linear-gradient(135deg, var(--pink), var(--lavender), var(--mint));
+      text-align: center;
+      padding: 3rem 2rem;
+      margin-top: 4rem;
+    }
+    footer p {
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.8;
+    }
+    footer .footer-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    footer .heart { color: #e07090; animation: heartBeat 1.5s ease-in-out infinite; }
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInDown {
+      from { opacity:0; transform: translateY(-20px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity:0; transform: translateY(20px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .add-photo-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: none;
+      border: 1.5px dashed var(--week-accent, var(--pink-dark));
+      border-radius: 10px;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--week-accent, var(--pink-dark));
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+      margin: 0 1.6rem 1rem;
+    }
+    .add-photo-btn:hover { background: rgba(255,255,255,0.7); }
+    .hidden-file-input { display: none; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .summary-content { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .lightbox-main { gap: 0.5rem; }
+      .lb-arrow { width: 36px; height: 36px; font-size: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .weeks-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<!-- DECORATIVE BLOBS -->
+<div class="blob-bg">
+  <span class="b1"></span>
+  <span class="b2"></span>
+  <span class="b3"></span>
+  <span class="b4"></span>
+</div>
+<!-- FLOATING PETALS -->
+<div class="petals" id="petalsContainer"></div>
+<!-- NAVIGATION -->
+<nav id="mainNav">
+  <a href="#hero" class="nav-logo">Portfolio <span>✦</span></a>
+  <div class="nav-links">
+    <a href="#about"   id="nav-about">Giới thiệu</a>
+    <a href="#weeks"   id="nav-weeks">6 Tuần học</a>
+    <a href="#summary" id="nav-summary">Tổng kết</a>
+  </div>
+</nav>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-badge">Portfolio học tập · 2026</div>
+  <div class="hero-avatar">🌸</div>
+  <h1 class="hero-name">Đồng Ngọc Phương Anh</h1>
+  <p class="hero-sub">Sinh viên Ứng dụng Công nghệ Thông tin</p>
+  <p class="hero-school">
+    <strong>Đại Học Quốc Gia Hà Nội</strong> &nbsp;·&nbsp; Hệ thống LMS VNU
+  </p>
+  <div class="hero-tags">
+    <span class="hero-tag pink">🗂️ Quản lý tệp</span>
+    <span class="hero-tag lavender">🔍 Tìm kiếm thông tin</span>
+    <span class="hero-tag mint">✍️ Prompt Engineering</span>
+    <span class="hero-tag peach">🤝 Hợp tác trực tuyến</span>
+    <span class="hero-tag sky">🎨 Sáng tạo với AI</span>
+    <span class="hero-tag pink">🤖 AI có trách nhiệm</span>
+  </div>
+  <div class="scroll-hint">
+    <span>Khám phá</span>
+    <div class="arrow">↓</div>
+  </div>
+</section>
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-label">✦ Về Portfolio</span>
+    <h2 class="section-title">Hành trình <em>6 tuần</em> học tập</h2>
+    <p class="section-desc">
+      Portfolio này ghi lại toàn bộ quá trình học tập, thực hành và phản tư của tôi trong môn học
+      <strong>Ứng dụng Công nghệ Thông tin</strong> – từ quản lý tệp đến sử dụng AI có trách nhiệm.
+    </p>
+  </div>
+  <div class="about-grid">
+    <div class="about-card reveal">
+      <h3>🎯 Mục tiêu môn học</h3>
+      <ul>
+        <li>Nắm vững kỹ năng quản lý tệp & thư mục hiệu quả</li>
+        <li>Thành thạo tìm kiếm và đánh giá thông tin online</li>
+        <li>Ứng dụng Prompt Engineering với các AI tool</li>
+        <li>Khai thác công cụ hợp tác trực tuyến (Google Workspace...)</li>
+        <li>Sáng tạo nội dung số bằng AI</li>
+        <li>Hiểu và thực hành đạo đức AI</li>
+      </ul>
+    </div>
+    <div class="about-card reveal">
+      <h3>📋 Thông tin Portfolio</h3>
+      <ul>
+        <li><strong>Họ tên:</strong> Đồng Ngọc Phương Anh</li>
+        <li><strong>Trường:</strong> Đại Học Quốc Gia Hà Nội</li>
+        <li><strong>Môn học:</strong> Ứng dụng Công nghệ Thông tin</li>
+        <li><strong>Số tuần:</strong> 6 tuần học & thực hành</li>
+        <li><strong>Hình thức:</strong> Portfolio cá nhân trực tuyến</li>
+        <li><strong>Thời gian:</strong> 2026</li>
+      </ul>
+    </div>
+    <div class="about-card reveal" style="grid-column: 1 / -1; overflow-x: auto;">
+      <h3>📊 Rubric đánh giá</h3>
+      <table class="rubric-table">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Tiêu chí</th>
+            <th>Điểm tối đa</th>
+            <th>Mô tả Mức 4 (Xuất sắc)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Thiết kế & Cấu trúc Portfolio</td>
+            <td><span class="score-badge">3</span></td>
+            <td>Thiết kế sáng tạo, tích hợp đa phương tiện; tối ưu trải nghiệm người dùng</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Tuần 1 – Quản lý tệp và thư mục</td>
+            <td><span class="score-badge">1</span></td>
+            <td>Quy tắc đặt tên sáng tạo; mô tả thể hiện hiểu sâu về tổ chức dữ liệu</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Tuần 2 – Tìm kiếm & đánh giá thông tin</td>
+            <td><span class="score-badge">1</span></td>
+            <td>Dùng linh hoạt &gt;4 toán tử; phân tích rất sâu sắc về chiến lược tìm kiếm</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Tuần 3 – Viết Prompt hiệu quả</td>
+            <td><span class="score-badge">1</span></td>
+            <td>Áp dụng thành thạo Prompt Engineering; so sánh sâu về cơ chế hoạt động AI</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Tuần 4 – Hợp tác trực tuyến</td>
+            <td><span class="score-badge">1</span></td>
+            <td>Tích hợp tính năng nâng cao; mô tả tối ưu hóa quy trình làm việc nhóm</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Tuần 5 – Sáng tạo nội dung với AI</td>
+            <td><span class="score-badge">1</span></td>
+            <td>Sản phẩm rất chuyên nghiệp và sáng tạo; tận dụng tối đa công cụ AI</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Tuần 6 – AI có trách nhiệm</td>
+            <td><span class="score-badge">1</span></td>
+            <td>Bộ nguyên tắc chi tiết; tư duy phản biện cao; đề xuất giải pháp đạo đức</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>Tổng kết & Đánh giá bản thân</td>
+            <td><span class="score-badge">1</span></td>
+            <td>Phân tích sâu sắc sự trưởng thành và cách áp dụng kỹ năng trong tương lai</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<!-- WEEKS -->
+<section id="weeks">
+  <div class="section-header reveal">
+    <span class="section-label">✦ Nhật ký học tập</span>
+    <h2 class="section-title">6 Tuần <em>thực hành</em></h2>
+    <p class="section-desc">
+      Nhấn vào từng tuần để xem chi tiết hình ảnh minh hoạ và nội dung thực hành.
+    </p>
+  </div>
+  <div class="weeks-grid" id="weeksGrid">
+    <!-- Cards rendered by JS -->
+  </div>
+</section>
+<!-- SUMMARY -->
+<section id="summary">
+  <div class="section-header reveal">
+    <span class="section-label">✦ Tổng kết</span>
+    <h2 class="section-title">Nhìn lại <em>hành trình</em></h2>
+    <p class="section-desc">Những gì tôi đã học, đã làm và mang theo sau 6 tuần.</p>
+  </div>
+  <div class="summary-content reveal">
+    <div class="summary-item">
+      <h3>🌱 Những gì tôi đã học</h3>
+      <ul>
+        <li>Tổ chức tệp & thư mục khoa học</li>
+        <li>Kỹ năng tìm kiếm nâng cao (site:, filetype:, "...")</li>
+        <li>Viết Prompt theo cấu trúc vai trò–bối cảnh–yêu cầu</li>
+        <li>Cộng tác nhóm qua Google Workspace & Trello</li>
+        <li>Sáng tạo nội dung số với ChatGPT & Canva AI</li>
+        <li>Nhận thức về đạo đức và trách nhiệm khi dùng AI</li>
+      </ul>
+    </div>
+    <div class="summary-item">
+      <h3>💡 Bài học kinh nghiệm</h3>
+      <ul>
+        <li>Đặt câu hỏi rõ ràng → AI trả lời tốt hơn</li>
+        <li>Tổ chức trước, thực hiện sau – tiết kiệm thời gian</li>
+        <li>Tìm kiếm có chiến lược quan trọng hơn tìm nhiều</li>
+        <li>Hợp tác online cần quy tắc & phân công rõ ràng</li>
+        <li>AI là công cụ – người dùng phải có tư duy phản biện</li>
+      </ul>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-pill"><span class="icon">🗂️</span> Quản lý tệp & thư mục</div>
+      <div class="skill-pill"><span class="icon">🔍</span> Tìm kiếm nâng cao</div>
+      <div class="skill-pill"><span class="icon">✍️</span> Prompt Engineering</div>
+      <div class="skill-pill"><span class="icon">🤝</span> Hợp tác trực tuyến</div>
+      <div class="skill-pill"><span class="icon">🎨</span> Sáng tạo nội dung AI</div>
+      <div class="skill-pill"><span class="icon">⚖️</span> Đạo đức AI</div>
+    </div>
+    <div class="summary-item" style="grid-column: 1 / -1;">
+      <h3>🚀 Định hướng tương lai</h3>
+      <p>
+        Sau khoá học này, tôi nhận ra rằng việc sử dụng công nghệ một cách thông minh,
+        có trách nhiệm và sáng tạo là kỹ năng cốt lõi của thời đại số. Tôi sẽ tiếp tục
+        nâng cao kỹ năng Prompt Engineering, khám phá thêm các công cụ AI mới, đồng thời
+        luôn đặt ra câu hỏi về đạo đức khi ứng dụng trí tuệ nhân tạo vào cuộc sống và công việc.
+      </p>
+    </div>
+  </div>
+</section>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Đồng Ngọc Phương Anh</div>
+  <p>Portfolio Ứng dụng Công nghệ Thông tin · Đại Học Quốc Gia Hà Nội · 2026</p>
+  <p style="margin-top:0.7rem;">Làm bằng <span class="heart">♥</span> và niềm đam mê học hỏi</p>
+</footer>
+<!-- LIGHTBOX -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Xem ảnh phóng to">
+  <button class="lightbox-close" id="lbClose" title="Đóng (Esc)">✕</button>
+  <div class="lightbox-week-title" id="lbWeekTitle"></div>
+  <div class="lightbox-main">
+    <button class="lb-arrow" id="lbPrev" title="Ảnh trước">‹</button>
+    <img id="lightbox-img" src="" alt="Ảnh phóng to" />
+    <button class="lb-arrow" id="lbNext" title="Ảnh tiếp theo">›</button>
+  </div>
+  <div class="lightbox-thumbnails" id="lbThumbs"></div>
+  <div id="lightbox-counter"></div>
+</div>
+<script>
+/* ==============================
+   DATA: Week definitions
+   ============================== */
+const WEEKS = [
+  {
+    id: 1,
+    title: "Quản lý tệp và thư mục",
+    subtitle: "Tổ chức & đặt tên khoa học",
+    desc: "Thực hành tạo cấu trúc thư mục logic, đặt tên tệp theo quy tắc nhất quán và chụp ảnh minh hoạ toàn bộ quá trình.",
+    tasks: [
+      "Tạo cấu trúc thư mục nhiều cấp",
+      "Áp dụng quy tắc đặt tên tệp",
+      "Thao tác tạo, sao chép, đổi tên tệp",
+      "Chụp ảnh minh hoạ từng bước",
+    ],
+    images: [
+      "bài 1/z7908407580827_14d67105cab05f662e211403e7252174.jpg",
+      "bài 1/z7908519902825_803ef9ae974559e4732788c93049f7f1.jpg",
+      "bài 1/z7908534866120_d771f61342dfe32840cd16752c38c06d.jpg",
+      "bài 1/z7908534866140_92c27d5bdc00dd01553e34511a2835bb.jpg",
+      "bài 1/z7908534866141_5de0781c314df02c591a95cf443d8d53.jpg",
+      "bài 1/z7908534915989_7de5e0de95dade84941290d24ad59fab.jpg",
+      "bài 1/z7908534916030_dd96ef8369de33c5ef3a9767d94eba8a.jpg",
+      "bài 1/z7908534967672_0e698640deaa76437c5e347dab8ce7f6.jpg",
+      "bài 1/z7908534967732_f5bdb0bd2c68290fcb34059cb1968501.jpg",
+      "bài 1/z7908534967733_ed849aeddf90d134b634827c0c4ba1af.jpg",
+      "bài 1/z7908535019489_d78ab4769532ad42cebf7e9656b36c64.jpg",
+      "bài 1/z7908535124452_eaba3f223880b4537290922b76aeb9ae.jpg",
+      "bài 1/z7908535174531_dce93759aab9e226d8b34a3237b0854e.jpg",
+      "bài 1/z7908535225710_34c612dfc4ecc095e052e65243a9234f.jpg",
+      "bài 1/z7908535276982_dc9290b5ba4aad3ff88da2134c035a97.jpg",
+    ],
+    bg1: "#fcd5b5", bg2: "#f9c6d0", accent: "#e07060",
+    emoji: "🗂️",
+  },
+  {
+    id: 2,
+    title: "Tìm kiếm & Đánh giá thông tin",
+    subtitle: "Toán tử nâng cao & tư duy phản biện",
+    desc: "Sử dụng các toán tử tìm kiếm nâng cao (site:, filetype:, \"...\") để tra cứu chính xác và đánh giá độ tin cậy của nguồn thông tin.",
+    tasks: [
+      "Thực hành toán tử site:, filetype:, intitle:",
+      "So sánh kết quả từ nhiều nguồn",
+      "Đánh giá độ tin cậy của thông tin",
+      "Chụp ảnh màn hình kết quả tìm kiếm",
+    ],
+    images: [], // Chỉ có file docx
+    bg1: "#d9c9f0", bg2: "#b8d8f0", accent: "#7a5cc0",
+    emoji: "🔍",
+  },
+  {
+    id: 3,
+    title: "Viết Prompt hiệu quả",
+    subtitle: "Nghệ thuật giao tiếp với AI",
+    desc: "Thực hành viết prompt theo cấu trúc rõ ràng (vai trò, bối cảnh, yêu cầu, định dạng) và cải tiến prompt qua nhiều vòng lặp.",
+    tasks: [
+      "Viết prompt ban đầu và phiên bản cải tiến",
+      "So sánh chất lượng phản hồi AI",
+      "Phân tích cơ chế hoạt động của LLM",
+      "Chụp màn hình kết quả từ ChatGPT",
+    ],
+    images: [
+      "bài 3/Screenshot 2026-04-05 202057.png",
+      "bài 3/Screenshot 2026-04-05 203452.png",
+    ],
+    bg1: "#b8e8d4", bg2: "#d9c9f0", accent: "#3a8e6a",
+    emoji: "✍️",
+  },
+  {
+    id: 4,
+    title: "Hợp tác trực tuyến",
+    subtitle: "Công cụ số & làm việc nhóm",
+    desc: "Ứng dụng các công cụ quản lý dự án và cộng tác online (Google Meet, Google Docs, Trello) để lên kế hoạch và theo dõi tiến độ nhóm.",
+    tasks: [
+      "Tạo không gian làm việc nhóm",
+      "Phân công nhiệm vụ & theo dõi tiến độ",
+      "Họp trực tuyến và ghi chép",
+      "Chụp minh hoạ các tính năng cộng tác",
+    ],
+    images: [
+      "bài 4/z7742550655992_fb77131756bbab92cfaf9c24b3840b77.jpg",
+      "bài 4/z7742571340302_8519c3ed82d7374710d74704712ae2a1.jpg",
+      "bài 4/z7742601038934_7c400a728d6812caf4e7f14e66c8ad90.jpg",
+    ],
+    bg1: "#fcd5b5", bg2: "#b8e8d4", accent: "#e07030",
+    emoji: "🤝",
+  },
+  {
+    id: 5,
+    title: "Sáng tạo nội dung với AI",
+    subtitle: "Bài thuyết trình & sản phẩm số",
+    desc: "Sử dụng ChatGPT, Canva AI và các công cụ khác để tạo ra sản phẩm nội dung số chuyên nghiệp: bài thuyết trình về Công nghệ AI trong thời đại hiện đại.",
+    tasks: [
+      "Viết prompt tạo bài thuyết trình Canva",
+      "Tạo slide về Công nghệ AI hiện đại",
+      "Sử dụng AI để tạo hình ảnh & nội dung",
+      "Xuất sản phẩm PDF hoàn chỉnh",
+    ],
+    images: [
+      "bài 5/Screenshot 2026-05-06 201416.png",
+      "bài 5/Screenshot 2026-05-06 201503.png",
+      "bài 5/Screenshot 2026-05-06 202227.png",
+    ],
+    bg1: "#b8d8f0", bg2: "#fcd5b5", accent: "#2a6aaa",
+    emoji: "🎨",
+  },
+  {
+    id: 6,
+    title: "AI có trách nhiệm",
+    subtitle: "Đạo đức & nguyên tắc sử dụng AI",
+    desc: "Xây dựng bộ nguyên tắc cá nhân khi sử dụng AI, phân tích các vấn đề đạo đức và đề xuất giải pháp cho các thách thức của trí tuệ nhân tạo.",
+    tasks: [
+      "Xây dựng 5-7 nguyên tắc AI cá nhân",
+      "Phân tích các rủi ro và bias của AI",
+      "Liên hệ với chính sách AI thực tế",
+      "Đề xuất giải pháp sử dụng AI có trách nhiệm",
+    ],
+    images: [], // Chỉ có file docx
+    bg1: "#f9c6d0", bg2: "#b8d8f0", accent: "#9040a0",
+    emoji: "⚖️",
+  },
+];
+/* Extra images added by user (by week id) */
+const extraImages = {};
+WEEKS.forEach(w => { extraImages[w.id] = []; });
+/* ==============================
+   RENDER WEEK CARDS
+   ============================== */
+function renderWeeks() {
+  const grid = document.getElementById('weeksGrid');
+  grid.innerHTML = '';
+  WEEKS.forEach((week, idx) => {
+    const card = document.createElement('div');
+    card.className = 'week-card reveal';
+    card.id = `week-card-${week.id}`;
+    card.style.setProperty('--week-bg1', week.bg1);
+    card.style.setProperty('--week-bg2', week.bg2);
+    card.style.setProperty('--week-accent', week.accent);
+    const allImgs = [...week.images, ...extraImages[week.id]];
+    const imgCount = allImgs.length;
+    const stripHTML = imgCount > 0
+      ? `<div class="gallery-strip" id="strip-${week.id}">
+          ${allImgs.map((src, i) => {
+            const isExtra = i >= week.images.length;
+            const imgSrc = isExtra ? src : encodeURIComponentPath(src);
+            return `<img src="${imgSrc}" alt="Tuần ${week.id} ảnh ${i+1}"
+                loading="lazy"
+                onerror="tryFallback(this, '${isExtra ? '' : src}')"
+                onclick="openLightbox(${week.id - 1}, ${i})" />`;
+          }).join('')}
+         </div>`
+      : `<p class="no-images" id="no-img-${week.id}">📄 Tuần này bao gồm báo cáo văn bản (docx)</p>`;
+    card.innerHTML = `
+      <div class="week-header">
+        <div class="week-number-badge">
+          <span class="wn-label">Tuần</span>
+          <span class="wn-num">${week.id}</span>
+        </div>
+        <div class="week-header-text">
+          <div class="week-title">${week.emoji} ${week.title}</div>
+          <div class="week-subtitle">${week.subtitle}</div>
+        </div>
+      </div>
+      <div class="week-body">
+        <p class="week-desc">${week.desc}</p>
+        <ul class="week-tasks">
+          ${week.tasks.map(t => `<li><span class="dot"></span>${t}</li>`).join('')}
+        </ul>
+      </div>
+      ${stripHTML}
+      <button class="add-photo-btn" onclick="triggerUpload(${week.id})">
+        📷 Thêm ảnh
+      </button>
+      <input type="file" accept="image/*" multiple class="hidden-file-input"
+             id="upload-${week.id}" onchange="handleUpload(event, ${week.id})" />
+      <div class="week-footer">
+        <span class="image-count" id="count-${week.id}">
+          📷 ${imgCount > 0 ? imgCount + ' ảnh minh hoạ' : 'Báo cáo văn bản'}
+        </span>
+        ${imgCount > 0
+          ? `<button class="view-btn" onclick="openLightbox(${week.id - 1}, 0)">Xem tất cả →</button>`
+          : `<span id="viewbtn-${week.id}"></span>`
+        }
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+/* Upload handler */
+function triggerUpload(weekId) {
+  document.getElementById(`upload-${weekId}`).click();
+}
+function handleUpload(event, weekId) {
+  const files = Array.from(event.target.files);
+  if (!files.length) return;
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      extraImages[weekId].push(e.target.result); // data URL
+      rebuildWeekCard(weekId);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+/* Rebuild a single week card after adding images */
+function rebuildWeekCard(weekId) {
+  const weekIdx = weekId - 1;
+  const week = WEEKS[weekIdx];
+  const allImgs = [...week.images, ...extraImages[weekId]];
+  const imgCount = allImgs.length;
+  // Update strip
+  let stripEl = document.getElementById(`strip-${weekId}`);
+  const noImgEl = document.getElementById(`no-img-${weekId}`);
+  if (!stripEl) {
+    // Create strip
+    stripEl = document.createElement('div');
+    stripEl.className = 'gallery-strip';
+    stripEl.id = `strip-${weekId}`;
+    const card = document.getElementById(`week-card-${weekId}`);
+    const addBtn = card.querySelector('.add-photo-btn');
+    card.insertBefore(stripEl, addBtn);
+    if (noImgEl) noImgEl.remove();
+  }
+  // Rebuild all thumbnails
+  stripEl.innerHTML = allImgs.map((src, i) => {
+    const isExtra = i >= week.images.length;
+    const imgSrc = isExtra ? src : encodeURIComponentPath(src);
+    return `<img src="${imgSrc}" alt="Tuần ${weekId} ảnh ${i+1}"
+        loading="lazy"
+        onerror="tryFallback(this, '${isExtra ? '' : src}')"
+        onclick="openLightbox(${weekIdx}, ${i})" />`;
+  }).join('');
+  // Update count
+  const countEl = document.getElementById(`count-${weekId}`);
+  if (countEl) countEl.textContent = `📷 ${imgCount} ảnh minh hoạ`;
+  // Show view button if first image added
+  const viewBtnEl = document.getElementById(`viewbtn-${weekId}`);
+  if (viewBtnEl && imgCount > 0) {
+    viewBtnEl.outerHTML = `<button class="view-btn" onclick="openLightbox(${weekIdx}, 0)">Xem tất cả →</button>`;
+  }
+}
+/* Fallback: try raw (non-encoded) path if encoded fails */
+function tryFallback(img, originalPath) {
+  if (!originalPath || img.dataset.fallbackTried) {
+    img.style.display = 'none';
+    return;
+  }
+  img.dataset.fallbackTried = '1';
+  img.src = originalPath; // try raw path
+}
+/* Encode path for use in src attribute - handles Vietnamese chars in folder names */
+function encodeURIComponentPath(path) {
+  // Split by '/' and encode each segment separately (preserves slashes)
+  return path.split('/').map(segment => {
+    // encodeURIComponent encodes everything including Vietnamese diacritics
+    return encodeURIComponent(segment);
+  }).join('/');
+}
+/* Also create a raw path version for cases where encoding might differ */
+function rawPath(path) {
+  return path;
+}
+/* ==============================
+   LIGHTBOX
+   ============================== */
+let lbWeekIndex = 0;
+let lbImgIndex  = 0;
+function openLightbox(weekIdx, imgIdx) {
+  lbWeekIndex = weekIdx;
+  lbImgIndex  = imgIdx;
+  renderLightbox();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function getAllImgs(weekIdx) {
+  const week = WEEKS[weekIdx];
+  return [...week.images, ...extraImages[week.id]];
+}
+function renderLightbox() {
+  const week = WEEKS[lbWeekIndex];
+  const imgs = getAllImgs(lbWeekIndex);
+  if (!imgs || imgs.length === 0) return;
+  const src = lbImgIndex >= week.images.length
+    ? imgs[lbImgIndex]  // data URL for extra images
+    : encodeURIComponentPath(imgs[lbImgIndex]);
+  const imgEl = document.getElementById('lightbox-img');
+  imgEl.src = src;
+  imgEl.onerror = () => {
+    if (!imgEl.dataset.lbFallback && lbImgIndex < week.images.length) {
+      imgEl.dataset.lbFallback = '1';
+      imgEl.src = week.images[lbImgIndex]; // raw fallback
+    }
+  };
+  imgEl.alt = `Tuần ${week.id} – ảnh ${lbImgIndex + 1}`;
+  document.getElementById('lbWeekTitle').textContent =
+    `✦ Tuần ${week.id}: ${week.title}`;
+  document.getElementById('lightbox-counter').textContent =
+    `${lbImgIndex + 1} / ${imgs.length}`;
+  // Thumbnails
+  const thumbsEl = document.getElementById('lbThumbs');
+  thumbsEl.innerHTML = imgs.map((s, i) => {
+    const isExtra = i >= week.images.length;
+    const thumbSrc = isExtra ? s : encodeURIComponentPath(s);
+    return `<img src="${thumbSrc}"
+          class="${i === lbImgIndex ? 'active' : ''}"
+          onclick="jumpLb(${i})"
+          onerror="tryFallback(this, '${isExtra ? '' : s}')"
+          alt="thumb ${i+1}" />`;
+  }).join('');
+  // Scroll active thumb into view
+  const activeThumb = thumbsEl.querySelector('.active');
+  if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+}
+function jumpLb(i) {
+  lbImgIndex = i;
+  document.getElementById('lightbox-img').removeAttribute('data-lb-fallback');
+  renderLightbox();
+}
+function lbNext() {
+  const imgs = getAllImgs(lbWeekIndex);
+  lbImgIndex = (lbImgIndex + 1) % imgs.length;
+  document.getElementById('lightbox-img').removeAttribute('data-lb-fallback');
+  renderLightbox();
+}
+function lbPrev() {
+  const imgs = getAllImgs(lbWeekIndex);
+  lbImgIndex = (lbImgIndex - 1 + imgs.length) % imgs.length;
+  document.getElementById('lightbox-img').removeAttribute('data-lb-fallback');
+  renderLightbox();
+}
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbNext').addEventListener('click', lbNext);
+document.getElementById('lbPrev').addEventListener('click', lbPrev);
+document.getElementById('lightbox').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+});
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape')     closeLightbox();
+  if (e.key === 'ArrowRight') lbNext();
+  if (e.key === 'ArrowLeft')  lbPrev();
+});
+/* ==============================
+   SCROLL REVEAL
+   ============================== */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+function initReveal() {
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+}
+/* ==============================
+   ACTIVE NAV
+   ============================== */
+const sections = ['about', 'weeks', 'summary'];
+const navLinks  = { about: 'nav-about', weeks: 'nav-weeks', summary: 'nav-summary' };
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      if (navLinks[id]) {
+        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+        const link = document.getElementById(navLinks[id]);
+        if (link) link.classList.add('active');
+      }
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) sectionObserver.observe(el);
+});
+/* ==============================
+   FLOATING PETALS
+   ============================== */
+function spawnPetals() {
+  const container = document.getElementById('petalsContainer');
+  const colors = ['#f9c6d0','#d9c9f0','#b8e8d4','#fcd5b5','#b8d8f0','#e8c4e0'];
+  for (let i = 0; i < 18; i++) {
+    const petal = document.createElement('div');
+    petal.className = 'petal';
+    petal.style.cssText = `
+      left: ${Math.random() * 100}vw;
+      top: -20px;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      animation-duration: ${6 + Math.random() * 8}s;
+      animation-delay: ${Math.random() * 10}s;
+      transform: rotate(${Math.random() * 360}deg) scale(${0.6 + Math.random() * 0.8});
+    `;
+    container.appendChild(petal);
+  }
+}
+/* ==============================
+   INIT
+   ============================== */
+document.addEventListener('DOMContentLoaded', () => {
+  renderWeeks();
+  setTimeout(initReveal, 100);
+  spawnPetals();
+});
+</script>
+</body>
+</html>
